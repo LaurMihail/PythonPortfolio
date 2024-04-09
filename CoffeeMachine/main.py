@@ -112,16 +112,16 @@ def make_coffee(drink_name, order_ingredients):
 
 def refill_resources():
     """Refill the resources."""
-    resources["water"] = 300
-    resources["milk"] = 200
-    resources["coffee"] = 100
+    resources["water"] = 500
+    resources["milk"] = 500
+    resources["coffee"] = 500
     print("Resources have been refilled.")
 
 
 is_on = True
 
 while is_on:
-    choice = input("What would you like? (Espresso/Latte/Cappuccino/Macchiato/Americano/Lungo) or (Report/Ramefill): ")
+    choice = input("What would you like? (Espresso/Latte/Cappuccino/Macchiato/Americano/Lungo) or (Report/Refill): ")
     if choice == "off":
         is_on = False
     elif choice == "Report":
