@@ -1,12 +1,12 @@
 MENU = {
-    "espresso": {
+    "Espresso": {
         "ingredients": {
             "water": 50,
             "coffee": 18,
         },
         "cost": 1.5,
     },
-    "latte": {
+    "Latte": {
         "ingredients": {
             "water": 200,
             "milk": 150,
@@ -14,21 +14,42 @@ MENU = {
         },
         "cost": 2.5,
     },
-    "cappuccino": {
+    "Cappuccino": {
         "ingredients": {
             "water": 250,
             "milk": 100,
             "coffee": 24,
         },
         "cost": 3.0,
+    },
+    "Macchiato": {
+        "ingredients": {
+            "milk": 5,
+            "coffee": 30,
+        },
+        "cost": 2.0,
+    },
+    "Americano": {
+            "ingredients": {
+                "water": 150,
+                "coffee": 18,
+            },
+            "cost": 2.0,
+    },
+    "Lungo": {
+            "ingredients": {
+                "water": 100,
+                "coffee": 24,
+            },
+            "cost": 2.0,
     }
 }
 
 profit = 0
 resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
+    "water": 500,
+    "milk": 500,
+    "coffee": 500,
 }
 
 
@@ -41,13 +62,31 @@ def is_resource_sufficient(order_ingredients):
     return True
 
 
-def process_coins():
+def process_coins(drink_cost):
     """Returns the total calculated from coins inserted."""
-    print("Please insert coins.")
-    total = int(input("How many quarters (25 cents)?: ")) * 0.25
-    total += int(input("How many dimes (10 cents)?: ")) * 0.1
-    total += int(input("How many nickles (5 cents)?: ")) * 0.05
-    total += int(input("How many pennies (1 cents?: ")) * 0.01
+    total = 0
+    while total < drink_cost:
+        print("Please insert coins.")
+        quarter = int(input("How many quarters (25 cents)?: "))
+        total += quarter * 0.25
+        if total >= drink_cost:
+            break
+
+        dime = int(input("How many dimes (10 cents)?: "))
+        total += dime * 0.1
+        if total >= drink_cost:
+            break
+
+        nickel = int(input("How many nickels (5 cents)?: "))
+        total += nickel * 0.05
+        if total >= drink_cost:
+            break
+
+        penny = int(input("How many pennies (1 cents)?: "))
+        total += penny * 0.01
+        if total >= drink_cost:
+            break
+
     return total
 
 
@@ -82,22 +121,22 @@ def refill_resources():
 is_on = True
 
 while is_on:
-    choice = input("What would you like? (espresso/latte/cappuccino) or (report/refill): ")
+    choice = input("What would you like? (Espresso/Latte/Cappuccino/Macchiato/Americano/Lungo) or (Report/Ramefill): ")
     if choice == "off":
         is_on = False
-    elif choice == "report":
+    elif choice == "Report":
         print(f"Water: {resources['water']}ml")
         print(f"Milk: {resources['milk']}ml")
         print(f"Coffee: {resources['coffee']}g")
         print(f"Money: ${profit}")
-    elif choice == "refill":
+    elif choice == "Refill":
         refill_resources()
     else:
         drink = MENU.get(choice)
         if drink:
             print(f"The price for {choice} is ${drink['cost']}.")
             if is_resource_sufficient(drink["ingredients"]):
-                payment = process_coins()
+                payment = process_coins(drink["cost"])
                 if is_transaction_successful(payment, drink["cost"]):
                     make_coffee(choice, drink["ingredients"])
         else:
